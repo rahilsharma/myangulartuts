@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-route.js"></script>
+<script>
+var x=angular.module('rahilApp',['ngRoute']);
+x.config(function($routeProvider)
+{
+$routeProvider.
+when('/',{
+templateUrl:'countryLst.html',
+controller:'CountryListCtrl'
+}).
+when('/:countryName',{
+templateUrl:'countryName.html',
+controller:'CountryDetailCtrl' 
+}
+).
+otherwise(
+{
+redirectTo:'/'
+});
+}
+);
+x.controller('CountryListCtrl',function($scope,$http){
+$http.get('countries.json').success(function(data)
+{
+$scope.countries=data;
+});
+}
+);
+x.controller('CountryDetailCtrl',function($scope,$routeParams){
+//console.log($routeParams);
+$scope.routePara=$routeParams;
+}
+);
+</script>
+<body>
+<div ng-app="rahilApp">
+ 	<div ng-view></div>
+</div>
+
+</body>
+</html>
